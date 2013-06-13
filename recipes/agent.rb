@@ -30,6 +30,7 @@ end
 template "/etc/bluepill/grinder.agent.pill" do
   variables(
     :working_dir => working_dir,
+    :properties_file => "#{node[:grinder][:properties_path]}/grinder.properties"
   )
   subscribes :create, "template[/etc/profile.d/grinder.sh]"
   notifies :reload, "bluepill_service[grinder.agent]", :delayed

@@ -3,7 +3,7 @@ Bluepill.application("grinder.agent") do |app|
   app.uid = "grinder"
   app.gid = "grinder"
   app.process("grinder.agent") do |process|
-    process.start_command = "java -classpath <%= node[:grinder][:classpath].join(":") -%> net.grinder.Grinder"
+    process.start_command = "java -classpath <%= node[:grinder][:classpath].join(":") -%> net.grinder.Grinder <%= properties_file %>"
     process.pid_file = "<%= @working_dir %>/grinder.agent.pid"
     process.daemonize = true
     process.stdout = process.stderr = "<%= @working_dir %>/bluepill.agent.log"

@@ -23,7 +23,7 @@ default[:grinder][:checksum] = "fa71e8e47d6ab7f3401b91f0087c20d6964e08712e303fae
 
 default[:grinder][:install_path] = "/opt"
 default[:grinder][:working_dir] = "/opt/grinder"
-default[:grinder][:properties_path] = "/etc/grinder"
+default[:grinder][:properties_path] = "#{node[:grinder][:working_dir]/etc/"
 default[:grinder][:httpHost] = "0.0.0.0"
 default[:grinder][:httpPort] = "6373"
 
