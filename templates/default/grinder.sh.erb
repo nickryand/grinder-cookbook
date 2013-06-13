@@ -1,0 +1,4 @@
+export CLASSPATH=<%= node[:grinder][:classpath].join(":") -%>:${CLASSPATH}
+export GRINDERPROPERTIES=<%= @properties_file %>
+alias grconsole="java -classpath ${CLASSPATH} net.grinder.Console"
+alias gragent="java -classpath ${CLASSPATH} net.grinder.Grinder ${GRINDPROPERTIES}"

@@ -1,0 +1,11 @@
+Bluepill.application("grinder.console") do |app|
+  app.working_dir = "<%= @working_dir %>"
+  app.uid = "grinder"
+  app.gid = "grinder"
+  app.process("grinder.console") do |process|
+    process.start_command = "java -Dgrinder.console.httpHost=<%= @httphost -%> -Dgrinder.console.httpPort=<%= @httpport -%> -classpath <%= node[:grinder][:classpath].join(":") -%> net.grinder.Console -headless"
+    process.pid_file = "<%= @working_dir %>/grinder.console.pid"
+    process.daemonize = true
+    process.stdout = process.stderr = "<%= @working_dir %>/bluepill.console.log"
+  end
+end
