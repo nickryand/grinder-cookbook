@@ -45,7 +45,7 @@ See `attributes/default.rb` for default values
 * node[:grinder][:jython][:checksum] - Checksum for the upgraded Jython jar
 * node[:grinder][:pypi][:modules] - Array of Pypi modules to install (See plugins.rb recipe)
 
-The grinder.properties file has a number of tunables that are used to control
+The grinder.properties file has several tuneables that are used to control
 the behavior of The Grinder. There are a number of them listed inside the default
 attributes file. However, the default recipe is written in such a way that simply 
 adding a value to the node[:grinder][:properties] will make it into the grinder.properties
@@ -53,9 +53,12 @@ file.
 
 If your configuration looked like this:
 
+```
 node[:grinder][:properties]["processes"] = 1
 node[:grinder][:properties]["threads"] = 1
 node[:grinder][:properties]["reportToConsole.interval"] = 500
+node[:grinder][:properties]["newTunable.from.newVersion"] = "New"
+```
 
 These values would end up in the grinder.properties file like this:
 
@@ -63,6 +66,7 @@ These values would end up in the grinder.properties file like this:
 grinder.processes = 1
 grinder.threads = 1
 grinder.reportToConsole.interval = 500
+grinder.newTunable.from.newVersion = New
 ```
 
 Please see `attributes/defaults.rb` for a full list of the grinder.properties default
