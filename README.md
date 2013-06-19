@@ -40,15 +40,16 @@ See `attributes/default.rb` for default values
 * node[:grinder][:httpPort] - Listen port for the Console process
 * node[:grinder][:jars_dir] - extra jar file storage (This director is added to the java classpath)
 * node[:grinder][:classpath] - Array of paths to be added to the classpath (This attribute is appended to during the chef run)
-* node[:grinder][:jython][:upgrade] - Boolean to enable jython upgrade
+* node[:grinder][:jython][:upgrade] - Boolean to enable Jython upgrade
 * node[:grinder][:jython][:url] - URL to the upgraded Jython jar
 * node[:grinder][:jython][:checksum] - Checksum for the upgraded Jython jar
 * node[:grinder][:pypi][:modules] - Array of Pypi modules to install (See plugins.rb recipe)
 
-The grinder.properties file has several tuneables that are used to control
-the behavior of The Grinder. There are a number of them listed inside the default
-attributes file. However, the default recipe is written in such a way that simply 
-adding a value to the node[:grinder][:properties] will make it into the grinder.properties
+The grinder.properties file has several tuneables that are used to
+control the behavior of The Grinder. There are a number of them listed
+inside the default attributes file. However, the default recipe is
+written in such a way that simply adding a value to the
+node[:grinder][:properties] will make it into the grinder.properties
 file.
 
 If your configuration looked like this:
@@ -76,18 +77,68 @@ Recipes
 =======
 
 ## default
+Installs and configures the grinder software. The grinder software is
+downloaded and unzipped into the directory set by the
+`node[:grinder][:install_path]` attribute. You can override the
+grinder download location using the `node[:grinder][:url]` attribute.
+
+The location of the grinder.jar file is discovered and set within this
+recipe.
+
+The following environment profile files are added for convenience:
+
+* /etc/profile.d/ruby.sh:
+  - Adds the default ruby bin directory to PATH.
+
+* /etc/profile.d/grinder.sh:
+  Exports the following Shell Variables:
+  - CLASSPATH: The java classpath for the grinder program
+  - GRINDERPROPERTIES: The location of the default grinder.properties file
+  Defines the following aliases:
+  - grconsole: Executes the Grinder console. This will require X11 Forwarding if you
+               are on a remote system. You can run the console in headless mode if you
+               pass the '-headless' command line option. By default the Grinder console
+               listens on '127.0.0.1'.
+  - gragent: Runs the Grinder agent in the foreground.
 
 ## console
+Run the console as a headless daemon via the bluepill process
+monitoring tool.
+
+The working directory is set to `node[:grinder][:working_dir]/console`.
 
 ## agent
+Run a single agent process as a daemon via the bluepill process
+monitoring tool.
+
+The working directory is set to `node[:grinder][:working_dir]/agent`.
 
 ## jython
+Upgrades the Jython jar file. The current upgrade target is Jython
+version 2.7-b1.
 
-The Jython jar file can be upgraded. Please note that the current stable version of The Grinder does not
-support the most up to date beta version of Jython. Any Jython version >= 2.7-b1 requires a grinder build
-from source. The next version of The Grinder should remove this requirement.
+You can override the `node[:grinder][:jython][:url]` and
+`node[:grinder][:jython][:checksum]` attributes to control
+which standalone Jython jar file you would like to update to.
+
+NOTE: The current stable version of The Grinder does not work with
+      the 2.7-b1 Jython version. The 3.12 version of The Grinder
+      adds this support.
 
 ## plugins
+Installs Pypi modules into a virtual environment at the path
+`node[:grinder][:working_dir]/pymodules`.
+
+The `node[:grinder][:pypi][:modules]` array controls which packages
+are installed into the virtual environment.
+
+The site-packages file inside the virtual environment is added
+to the CLASSPATH variable.
+
+Not all python modules work with Jython. This recipe exists as a
+convenient method of getting python packages installed into a
+controlled environment. I did test it with the simplejson pure
+python module and it worked without issue.
 
 License and Author
 ==================
