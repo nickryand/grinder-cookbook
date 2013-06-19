@@ -47,10 +47,21 @@ See `attributes/default.rb` for default values
 
 The grinder.properties file has several tuneables that are used to
 control the behavior of The Grinder. There are a number of them listed
-inside the default attributes file. However, the default recipe is
-written in such a way that simply adding a value to the
-node[:grinder][:properties] will make it into the grinder.properties
-file.
+inside the default attributes file. Please see `attributes/defaults.rb`
+for a complete list of the tuneables.
+
+Two of the tuneables should be pointed out. These two properties tell
+the agent processes where to contact the console service. The defaults
+are shown here.
+
+```
+node[:grinder][:properties]["consoleHost"] = "127.0.0.1"
+node[:grinder][:properties]["consolePort"] = "6372"
+```
+
+The default recipe is written in such a way that simply adding a value
+to the node[:grinder][:properties] will make it into the
+grinder.properties file.
 
 If your configuration looked like this:
 
@@ -91,15 +102,15 @@ The following environment profile files are added for convenience:
   - Adds the default ruby bin directory to PATH.
 
 * /etc/profile.d/grinder.sh:
-  Exports the following Shell Variables:
-  - CLASSPATH: The java classpath for the grinder program
-  - GRINDERPROPERTIES: The location of the default grinder.properties file
-  Defines the following aliases:
-  - grconsole: Executes the Grinder console. This will require X11 Forwarding if you
-               are on a remote system. You can run the console in headless mode if you
-               pass the '-headless' command line option. By default the Grinder console
-               listens on '127.0.0.1'.
-  - gragent: Runs the Grinder agent in the foreground.
+  + Exports the following Shell Variables:
+    - CLASSPATH: The java classpath for the grinder program
+      - GRINDERPROPERTIES: The location of the default grinder.properties file
+  + Defines the following aliases:
+    - grconsole: Executes the Grinder console. This will require X11 Forwarding if you
+                 are on a remote system. You can run the console in headless mode if you
+                 pass the '-headless' command line option. By default the Grinder console
+                 listens on '127.0.0.1'.
+    - gragent: Runs the Grinder agent in the foreground.
 
 ## console
 Run the console as a headless daemon via the bluepill process
