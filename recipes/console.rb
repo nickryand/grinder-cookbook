@@ -27,6 +27,13 @@ directory working_dir do
   action :create
 end
 
+directory "/etc/bluepill" do
+  owner "root"
+  group "root"
+  recursive true
+  action :create
+end
+
 template "/etc/bluepill/grinder.console.pill" do
   variables(
     :working_dir => working_dir,
