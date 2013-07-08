@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 include_recipe "grinder"
+include_recipe "build-essential"
 include_recipe "bluepill"
 
 working_dir = "#{node[:grinder][:working_dir]}/agent"
@@ -27,14 +28,7 @@ directory working_dir do
   action :create
 end
 
-directory "/etc/bluepill" do
-  owner "root"
-  group "root"
-  recursive true
-  action :create
-end
-
-template "/etc/bluepill/grinder.agent.pill" do
+template "#{node[:bluepill][:conf_dir]}/grinder.agent.pill" do
   variables(
     :working_dir => working_dir,
     :properties_file => "#{node[:grinder][:properties_path]}/grinder.properties"

@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 include_recipe "grinder"
+include_recipe "build_essential"
 include_recipe "bluepill"
 
 working_dir = "#{node[:grinder][:working_dir]}/console"
@@ -34,7 +35,7 @@ directory "/etc/bluepill" do
   action :create
 end
 
-template "/etc/bluepill/grinder.console.pill" do
+template "#{node[:bluepill][:conf_dir]}/grinder.console.pill" do
   variables(
     :working_dir => working_dir,
     :httphost => node[:grinder][:httpHost],
