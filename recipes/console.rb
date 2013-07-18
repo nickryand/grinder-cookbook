@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 include_recipe "grinder"
-include_recipe "build_essential"
+include_recipe "build-essential"
 include_recipe "bluepill"
 
 working_dir = "#{node[:grinder][:working_dir]}/console"
