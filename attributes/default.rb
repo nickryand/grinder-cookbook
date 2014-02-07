@@ -18,7 +18,7 @@
 # limitations under the License.
 
 default[:grinder][:version] = "3.11"
-default[:grinder][:url] = "http://sourceforge.net/projects/grinder/files/The%20Grinder%203/#{node[:grinder][:version]}/grinder-#{node[:grinder][:version]}-binary.zip"
+default[:grinder][:url] = "http://iweb.dl.sourceforge.net/project/grinder/The%20Grinder%203/#{node[:grinder][:version]}/grinder-#{node[:grinder][:version]}-binary.zip"
 default[:grinder][:checksum] = "fa71e8e47d6ab7f3401b91f0087c20d6964e08712e303faeb1f12ea6e5d25ccd"
 
 default[:grinder][:install_path] = "/opt"
