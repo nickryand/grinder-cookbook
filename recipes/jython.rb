@@ -19,8 +19,8 @@
 
 jython_path = "#{node[:grinder][:jars_dir]}/jython.jar"
 remote_file jython_path do
-  owner "root"
-  group "root"
+  owner 'root'
+  group 'root'
   mode 0644
   source node[:grinder][:jython][:url]
   checksum node[:grinder][:jython][:checksum]

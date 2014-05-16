@@ -1,0 +1,14 @@
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: ubuntu-12.04
+
+suites:
+  - name: grinder
+    run_list:
+      - recipe[grinder::console]
+      - recipe[grinder::agent]

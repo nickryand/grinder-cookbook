@@ -98,3 +98,7 @@ Vagrantfile
 # VM Data #
 ###########
 vm_data/*
+
+# Test-Kitchen #
+################
+.kitchen*

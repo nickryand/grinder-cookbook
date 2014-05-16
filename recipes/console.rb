@@ -16,35 +16,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe "grinder"
-include_recipe "build-essential"
-include_recipe "bluepill"
+include_recipe 'grinder'
+include_recipe 'build-essential'
+include_recipe 'bluepill'
 
 working_dir = "#{node[:grinder][:working_dir]}/console"
 directory working_dir do
-  owner "grinder"
-  group "grinder"
+  owner node[:grinder][:user]
+  group node[:grinder][:group]
   recursive true
   action :create
 end
 
-directory "/etc/bluepill" do
-  owner "root"
-  group "root"
+directory '/etc/bluepill' do
+  owner 'root'
+  group 'root'
   recursive true
   action :create
 end
 
 template "#{node[:bluepill][:conf_dir]}/grinder.console.pill" do
   variables(
-    :working_dir => working_dir,
-    :httphost => node[:grinder][:httpHost],
-    :httpport => node[:grinder][:httpPort],
+    working_dir: node[:grinder][:working_dir],
+    httphost: node[:grinder][:httpHost],
+    httpport: node[:grinder][:httpPort],
+    user: node[:grinder][:user],
+    group: node[:grinder][:group]
   )
-  subscribes :create, "template[/etc/profile.d/grinder.sh]"
-  notifies :reload, "bluepill_service[grinder.console]", :delayed
+  subscribes :create, 'template[/etc/profile.d/grinder.sh]'
+  notifies :reload, 'bluepill_service[grinder.console]', :delayed
 end
 
-bluepill_service "grinder.console" do
+bluepill_service 'grinder.console' do
   action [:enable, :load, :start]
 end

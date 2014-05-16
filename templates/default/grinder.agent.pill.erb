@@ -1,7 +1,7 @@
 Bluepill.application("grinder.agent") do |app|
-  app.working_dir = "<%= @working_dir %>"
-  app.uid = "grinder"
-  app.gid = "grinder"
+  app.working_dir = "<%= @working_dir %>/agent"
+  app.uid = "<%= @user %>"
+  app.gid = "<%= @group %>"
   app.process("grinder.agent") do |process|
     process.start_command = "java -classpath <%= node[:grinder][:classpath].join(":") -%> net.grinder.Grinder <%= @properties_file %>"
     process.pid_file = "<%= @working_dir %>/grinder.agent.pid"

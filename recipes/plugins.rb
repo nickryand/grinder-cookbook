@@ -16,20 +16,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe "grinder"
-include_recipe "python"
+include_recipe 'grinder'
+include_recipe 'python'
+
+usr = node[:grinder][:user]
+grp = node[:grinder][:group]
 
 virtualenv = "#{node[:grinder][:working_dir]}/pymodules"
 directory virtualenv do
-  owner "grinder"
-  group "grinder"
+  owner usr
+  group grp
   recursive true
   action :create
 end
 
 python_virtualenv virtualenv do
-  owner "grinder"
-  group "grinder"
+  owner usr
+  group grp
   action :create
 end
 
@@ -40,7 +43,7 @@ node[:grinder][:pypi][:modules].each do |pkg|
   end
 end
 
-ruby_block "add_python_modules_to_classpath" do
+ruby_block 'add_python_modules_to_classpath' do
   block do
     module_path = []
     module_path.concat(::Dir.glob("#{virtualenv}/lib/*/site-packages"))
@@ -49,5 +52,5 @@ ruby_block "add_python_modules_to_classpath" do
       node.default[:grinder][:classpath] << pymod unless node.default[:grinder][:classpath].include?(pymod)
     end
   end
-  notifies :create, "template[/etc/profile.d/grinder.sh]", :delayed
+  notifies :create, 'template[/etc/profile.d/grinder.sh]', :delayed
 end
