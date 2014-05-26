@@ -8,12 +8,10 @@ The Grinder Website: http://grinder.sourceforge.net/
 
 Requirements
 ============
-Chef >= 10
+Chef >= 11
 
-## Vagrant Requirements
-* vagrant
-* vagrant-omnibus plugin
-* vagrant-berkshelf plugin
+## Test Kitchen requirements
+* vagrant >= 1.5.4
 
 ## Cookbooks
 * apt
@@ -50,7 +48,7 @@ control the behavior of The Grinder. There are a number of them listed
 inside the default attributes file. Please see `attributes/defaults.rb`
 for a complete list of the tuneables.
 
-Two of the tuneables should be pointed out. These two properties tell
+Two of the tunable should be pointed out. These two properties tell
 the agent processes where to contact the console service. The defaults
 are shown here.
 
